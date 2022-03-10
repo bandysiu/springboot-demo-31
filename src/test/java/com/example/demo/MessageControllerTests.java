@@ -15,7 +15,9 @@ import static org.mockito.Mockito.when;
 
 public class MessageControllerTests {
 
-    public static final String MESSAGE = "DB works";
+    public static final String BE_SUCCESS_MESSAGE = "BE works";
+    public static final String DB_SUCCESS_MESSAGE = "DB success message";
+    public static final String DB_ERROR_MESSAGE = "DB error message";
     @Mock
     private MessageRepository repository;
 
@@ -29,12 +31,12 @@ public class MessageControllerTests {
 
     @Test
     public void shouldBEandDBWork() {
-        when(repository.findAll()).thenReturn(Arrays.asList(new Message(MESSAGE)));
-        assertEquals(MessageController.BE_SUCCESS_MESSAGE + MessageController.DB_SUCCESS_MESSAGE + MESSAGE, controller.getMessage());
+        when(repository.findAll()).thenReturn(Arrays.asList(new Message(BE_SUCCESS_MESSAGE)));
+        assertEquals(MessageController.BE_SUCCESS_MESSAGE + MessageController.DB_SUCCESS_MESSAGE + DB_SUCCESS_MESSAGE, controller.getMessage());
     }
     @Test
     public void shouldWorkOnlyBE() {
         when(repository.findAll()).thenReturn(new ArrayList<>());
-        assertEquals(MessageController.BE_SUCCESS_MESSAGE, controller.getMessage());
+        assertEquals(MessageController.DB_ERROR_MESSAGE, controller.getMessage());
     }
 }
